@@ -1,6 +1,9 @@
 import Head from "next/head";
 
-export default function Home() {
+import axios from "configs/axios";
+
+function Home(props) {
+  console.log(props);
   return (
     <div className="container mx-auto mt-4">
       <Head>
@@ -13,3 +16,15 @@ export default function Home() {
     </div>
   );
 }
+
+Home.getInitialProps = async () => {
+  try {
+    const data = await axios.get(`/courses`);
+    console.log(data);
+    return { data: data.data };
+  } catch (error) {
+    return error;
+  }
+};
+
+export default Home;
